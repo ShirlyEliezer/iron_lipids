@@ -2,7 +2,7 @@ from processor import *
 from predictor import *
 
 
-def categorical_cross_val(data):
+def categorical_cross_val(data, target):
     """
     This function performs cross validation using 'leave one out' method.
     The function predicts the target variable using one or several predictors.
@@ -16,7 +16,7 @@ def categorical_cross_val(data):
         X[col] = X[col] * X[IRON]
     for col in X.columns[5:8]:
         X[col] = X[col] * X[LIPID]
-    y = np.array(data[R1])
+    y = np.array(data[target])
     X = np.array(X[X.columns[2:]]).reshape(-1, 6)
 
     # normalize the data
@@ -27,7 +27,7 @@ def categorical_cross_val(data):
     pred.plot()
 
 
-def cross_val(data):
+def cross_val(data, target):
     models = {
             'IRON': np.array(data[IRON]).reshape(-1, 1),
             'LIPID': np.array(data[LIPID]).reshape(-1, 1),
@@ -41,7 +41,7 @@ def cross_val(data):
     for model in models:
         # create X, y
         X = models[model]
-        y = np.array(data[R1])
+        y = np.array(data[target])
         # normalize the data
         for i in range(len(X[0])):
             X[:, i] = scale(X[:, i])
@@ -52,10 +52,12 @@ def cross_val(data):
 
 if __name__ == '__main__':
 
-    pro = Processor()
-    pro.pre_processing()
-    pro.detect_outliers()
-    pro.relations_target(IRON_TYPE, R1, IRON)
-    pro.relations_target(LIPID_TYPE, R1, LIPID)
-    cross_val(pro.get_data())
-    categorical_cross_val(pro.get_data())
+    targets = [R1, R2, R2S, MT, MTV]
+    for target in targets:
+        pro = Processor(target)
+        pro.pre_processing()
+        pro.detect_outliers()
+        pro.relations_target(IRON_TYPE, target, IRON)
+        pro.relations_target(LIPID_TYPE, target, LIPID)
+        cross_val(pro.get_data(), target)
+        categorical_cross_val(pro.get_data(), target)

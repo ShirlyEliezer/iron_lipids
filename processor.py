@@ -3,8 +3,9 @@ from toolBox import *
 
 class Processor:
 
-    def __init__(self):
+    def __init__(self, target):
         self.data = pd.read_excel(PATH)
+        self.target = target
 
     def pre_processing(self):
         """
@@ -24,7 +25,7 @@ class Processor:
 
         # Compute the correlation matrix
         corr = self.data.corr()
-        print(corr[R1])
+        print(corr[target])
 
         # Generate a mask for the upper triangle
         mask = np.triu(np.ones_like(corr, dtype=bool))
@@ -51,33 +52,33 @@ class Processor:
         plt.show()
 
     def detect_outliers(self):
-        # import warnings
-        # warnings.filterwarnings('ignore')
-        # plt.figure(figsize=(16, 5))
-        # plt.subplot(1, 2, 1)
-        # sns.distplot(self.data[R1])
-        # # plt.show()
-
-        sns.boxplot(x=self.data[R1])
-        plt.show()
-
-        highest = self.data[R1].mean() + 3 * self.data[R1].std()
-        lowest = self.data[R1].mean() - 3 * self.data[R1].std()
-
-        print(self.data[R1].describe())
-
-        print(self.data[(self.data[R1] > highest) | (self.data[R1] < lowest)]['ExpNum'])
-        self.data = self.data[(self.data[R1] < highest) & (self.data[R1] > lowest)]
-
-        print(self.data.describe())
-        #
-        # warnings.filterwarnings('ignore')
-        # plt.figure(figsize=(16, 5))
-        # plt.subplot(1, 2, 1)
-        # sns.distplot(self.data[R1])
+        import warnings
+        warnings.filterwarnings('ignore')
+        plt.figure(figsize=(16, 5))
+        plt.subplot(1, 2, 1)
+        sns.distplot(self.data[self.target])
         # plt.show()
 
-        sns.boxplot(x=self.data[R1])
+        sns.boxplot(x=self.data[self.target])
+        plt.show()
+
+        highest = self.data[self.target].mean() + 3 * self.data[self.target].std()
+        lowest = self.data[self.target].mean() - 3 * self.data[self.target].std()
+
+        print(self.data[self.target].describe())
+
+        print(self.data[(self.data[self.target] > highest) | (self.data[self.target] < lowest)]['ExpNum'])
+        self.data = self.data[(self.data[self.target] < highest) & (self.data[self.target] > lowest)]
+
+        print(self.data.describe())
+
+        warnings.filterwarnings('ignore')
+        plt.figure(figsize=(16, 5))
+        plt.subplot(1, 2, 1)
+        sns.distplot(self.data[self.target])
+        plt.show()
+
+        sns.boxplot(x=self.data[self.target])
         plt.show()
 
 
