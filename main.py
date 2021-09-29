@@ -52,7 +52,9 @@ def cross_val(data, target):
 
 if __name__ == '__main__':
 
-    targets = [R1, R2, R2S, MT, MTV]
+    # targets = [R1, R2, R2S, MT, MTV]
+    #
+    targets = [MTV]
     for target in targets:
         pro = Processor(target)
         pro.pre_processing()
