@@ -25,21 +25,22 @@ class Processor:
 
         # Compute the correlation matrix
         corr = self.data.corr()
-        print(corr[target])
+        # print(corr[target])
+        print(stats.pearsonr(self.data[target], self.data[relation_sub]))
 
-        # Generate a mask for the upper triangle
-        mask = np.triu(np.ones_like(corr, dtype=bool))
-
-        # Set up the matplotlib figure
-        f, ax = plt.subplots(figsize=(11, 9))
-
-        # Generate a custom diverging colormap
-        cmap = sns.diverging_palette(230, 20, as_cmap=True)
-
-        # Draw the heatmap with the mask and correct aspect ratio
-        sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.3, center=0,
-                    square=True, linewidths=.5, cbar_kws={"shrink": .5})
-        plt.show()
+        # # Generate a mask for the upper triangle
+        # mask = np.triu(np.ones_like(corr, dtype=bool))
+        #
+        # # Set up the matplotlib figure
+        # f, ax = plt.subplots(figsize=(11, 9))
+        #
+        # # Generate a custom diverging colormap
+        # cmap = sns.diverging_palette(230, 20, as_cmap=True)
+        #
+        # # Draw the heatmap with the mask and correct aspect ratio
+        # sns.heatmap(corr, mask=mask, cmap=cmap, vmax=.3, center=0,
+        #             square=True, linewidths=.5, cbar_kws={"shrink": .5})
+        # plt.show()
 
         g = sns.pairplot(self.data, hue=for_hue, palette="muted", size=5,
                          vars=[target, relation_sub], kind='reg')
@@ -53,30 +54,14 @@ class Processor:
 
     def detect_outliers(self):
         import warnings
-        warnings.filterwarnings('ignore')
-        plt.figure(figsize=(16, 5))
-        plt.subplot(1, 2, 1)
-        sns.distplot(self.data[self.target])
-        # plt.show()
 
         sns.boxplot(x=self.data[self.target])
         plt.show()
 
         highest = self.data[self.target].mean() + 3 * self.data[self.target].std()
         lowest = self.data[self.target].mean() - 3 * self.data[self.target].std()
-
-        print(self.data[self.target].describe())
-
-        print(self.data[(self.data[self.target] > highest) | (self.data[self.target] < lowest)]['ExpNum'])
         self.data = self.data[(self.data[self.target] < highest) & (self.data[self.target] > lowest)]
 
-        print(self.data.describe())
-
-        warnings.filterwarnings('ignore')
-        plt.figure(figsize=(16, 5))
-        plt.subplot(1, 2, 1)
-        sns.distplot(self.data[self.target])
-        plt.show()
 
         sns.boxplot(x=self.data[self.target])
         plt.show()

@@ -13,6 +13,9 @@ from numpy import mean
 from numpy import absolute
 import matplotlib.patches as mpatches
 import seaborn as sns
+from scipy import stats
+
+
 
 
 # -------------------- CONSTANTS --------------------
