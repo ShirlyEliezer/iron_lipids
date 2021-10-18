@@ -1,3 +1,5 @@
+""" predictor class. each instance of the class has its own X, y, total data. cross validation
+    model - leave one out is defined. """
 from plots import *
 
 
@@ -30,8 +32,9 @@ class Predictor:
     def plot(self):
         """ the function create instance of Plot class and plots the data """
         self.scores()
-        title = "R^2: " + str(float("{:.3f}".format(self.accuracy))) + " Mean absolute squared " \
-                "error: " + str(float("{:.3f}".format(self.mae)))
+        title = "R^2: " + str(float("{:.3f}".format(self.accuracy))) + " MAE: " + \
+                str(float("{:.3f}".format(self.mae)))
 
-        pl = Plots(self.y, self.predict(), "R1[1/sec] measured", "R1[1/sec] predicted", title, self.data)
+        pl = Plots(self.y, self.predict(), "R1[1/sec] measured", "R1[1/sec] predicted",
+                   title, self.data)
         pl.plot()

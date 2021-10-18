@@ -1,0 +1,29 @@
+***This project was written by Shirly Eliezer, shirly.eliezer@gmail.com****
+
+The purpose of this project is to predict qMRI parameters according to iron and lipid
+concentrations, and iron types and lipid types.
+
+############################### includes ##############################################
+
+1. main.py: the main file of this project. through this file you can run the entire project. It is
+important to update the name of the data file in the tool box file, for correct use.
+The file contains the qMRI parameters need to be predicted.
+
+2. toolBox: helper file for the project. important variables and configurations saved there, and all
+ the files knows to read variables, dictionaries and arrays from there. save there important
+ variables that are relevant for all of the files.
+
+3. processor: The class create instance that read the data, detect and remove outliers and ignore experiments
+    that disqualified according to previous decisions.
+
+4. predictor: The file contains the predictor class. Each instance of the class has its own X, y,
+    total data. cross validation model - leave one out is defined.
+
+5. plots: The file contains the Plots class. Each instance of the class has its own x axis, y axis,
+    total data, title and labels. The other files plots data with instances of the class.
+
+
+############################### notes ##############################################
+
+if you want to change the models - you need to change it the cross_val function in the main file.
+The function categorical_cross_val in the main file - present the model: a*[lipid type]*lipid_type + b*[Fe]*iron_type + c

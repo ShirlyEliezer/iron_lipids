@@ -16,8 +16,6 @@ import seaborn as sns
 from scipy import stats
 
 
-
-
 # -------------------- CONSTANTS --------------------
 PATH = "phantom_table.xlsx"
 IRON = '[Fe] sigma [mg/ml]'
@@ -35,5 +33,6 @@ MT = 'MT [p.u.]'
 iron_type_colors = {'Fe2': 'r', 'Ferritin': 'c', 'Transferrin': 'y'}
 lipid_type_markers = {'PC_SM': markers.CARETRIGHT, 'PC': '_', 'PC_Cholest': '3'}
 
+# update here the experiments need to disqualify
 bad_samples = [6, 8, 11, 12, 13, 14, 15, 'O1', 'O2', 'O3']
 

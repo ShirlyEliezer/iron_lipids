@@ -1,3 +1,5 @@
+"""" plots class. Each instance of the class has its own x axis, y axis, total data, title and
+    labels. """
 from toolBox import *
 
 
@@ -57,7 +59,6 @@ class Plots:
         plt.title(self.title)
         plt.xlabel(self.x_label)
         plt.ylabel(self.y_label)
-
         plt.show()
 
 
